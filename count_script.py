@@ -3,7 +3,7 @@
 import json
 import os
 
-download_dir = '/home/ec2-user/gascrape/data/profiles/actors-100'
+download_dir = '/Users/kajibu/data/lab/gascrape/tmp/profiles/actors-100'
 
 keys = ['name', 'company', 'location', 'email', 'hireable']
 counts = {
