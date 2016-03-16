@@ -17,7 +17,7 @@ OUTPUT_DIR=${DATA_DIR}/profiles/actors-100
 CLIENT_ID=a229b66040dd4bb8010b
 CLIENT_SECRET=b835ee03871cb8a2fbd8b63a7d63aecb084f9253
 
-for i in {$START..$END}
+for i in `seq $START $END`
 do
   ${BIN}\
     --user_file=${INPUT_DIR}/actors-$i\
