@@ -7,7 +7,7 @@ set -x
 #START=55
 #END=64
 
-BASE_DIR=/home/ec2-user/gascrape
+BASE_DIR=/home/${USER}/gascrape
 BIN=${BASE_DIR}/download_profiles.py
 DATA_DIR=${BASE_DIR}/data
 INPUT_DIR=${DATA_DIR}/actors-100
