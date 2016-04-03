@@ -4,8 +4,8 @@ set -e
 set -o pipefail
 set -x
 
-START=15
-END=34
+#START=55
+#END=64
 
 BASE_DIR=/home/ec2-user/gascrape
 BIN=${BASE_DIR}/download_profiles.py
@@ -13,9 +13,12 @@ DATA_DIR=${BASE_DIR}/data
 INPUT_DIR=${DATA_DIR}/actors-100
 OUTPUT_DIR=${DATA_DIR}/profiles/actors-100
 
-# kajibu.test
-CLIENT_ID=a229b66040dd4bb8010b
-CLIENT_SECRET=b835ee03871cb8a2fbd8b63a7d63aecb084f9253
+# kajibutest
+#CLIENT_ID=a229b66040dd4bb8010b
+#CLIENT_SECRET=b835ee03871cb8a2fbd8b63a7d63aecb084f9253
+# ceshi2
+#CLIENT_ID=840b9823f6dc90283e74
+#CLIENT_SECRET=d9e075955bee048bfb8ab5a2dc1ebf5e7a298bb4
 
 for i in `seq $START $END`
 do
