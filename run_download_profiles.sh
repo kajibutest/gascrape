@@ -18,6 +18,8 @@ CLIENT_SECRET=
 
 for i in `seq $START $END`
 do
+  mkdir -p ${OUTPUT_DIR}
+
   ${BIN}\
     --user_file=${INPUT_DIR}/actors-$i\
     --download_base_dir=${OUTPUT_DIR}\
