@@ -26,7 +26,7 @@ do
 
   # Zip and delete original folder to save file count,
   # which is limited on AWS.
-  tar -zcvf ${OUTPUT_DIR}/actors-$i.tar.gz ${OUTPUT_DIR}/actors-$i
+  tar -zcf ${OUTPUT_DIR}/actors-$i.tar.gz ${OUTPUT_DIR}/actors-$i
   rm -rf ${OUTPUT_DIR}/actors-$i
 done
 
