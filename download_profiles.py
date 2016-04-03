@@ -52,7 +52,7 @@ def download_profiles(args):
 
     ok = False
     for delay_sec in ERROR_DELAY_SECS:
-      sleep_sec += args.sleep_sec + delay_sec
+      sleep_sec = args.sleep_sec + delay_sec
       if sleep_sec > 0:
         time.sleep(sleep_sec)
 
