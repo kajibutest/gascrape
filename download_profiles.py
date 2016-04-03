@@ -51,10 +51,10 @@ def download_profiles(args):
                           output_file))
 
     ok = False
-    for j in range(ERROR_DELAY_SECS):
-      delay = ERROR_DELAY_SECS[j] + args.sleep_sec
-      if delay > 0:
-        time.sleep(delay)
+    for delay_sec in ERROR_DELAY_SECS:
+      sleep_sec += args.sleep_sec + delay_sec
+      if sleep_sec > 0:
+        time.sleep(sleep_sec)
 
       if os.system(cmd) == 0:
         if is_ok(output_file, users[i]):
