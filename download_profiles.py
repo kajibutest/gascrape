@@ -7,6 +7,8 @@ import sys
 import time
 
 CURL = '/usr/bin/curl'
+# Keep retrying on error with backoff for about a hour.
+ERROR_DELAY_SECS = [0, 1, 5, 10, 30] + [60] * 60
 PRINT_INTERVAL = 100
 
 def flush(msg):
@@ -49,9 +51,10 @@ def download_profiles(args):
                           output_file))
 
     ok = False
-    for j in range(args.wget_tries):
-      if args.sleep_sec > 0:
-        time.sleep(args.sleep_sec)
+    for j in range(ERROR_DELAY_SECS):
+      delay = ERROR_DELAY_SECS[j] + args.sleep_sec
+      if delay > 0:
+        time.sleep(delay)
 
       if os.system(cmd) == 0:
         if is_ok(output_file, users[i]):
@@ -70,7 +73,6 @@ def main():
   parser.add_argument('--files_per_folder', type=int, default=1000)
   # Github limit is 5000/hour.
   parser.add_argument('--sleep_sec', type=float, default=0.35)
-  parser.add_argument('--wget_tries', type=int, default=10)
   parser.add_argument('--overwrite', type=bool, default=False)
   download_profiles(parser.parse_args())
 
