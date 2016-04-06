@@ -11,17 +11,26 @@ CURL = '/usr/bin/curl'
 ERROR_DELAY_SECS = [0, 1, 5, 10, 30] + [60] * 60
 PRINT_INTERVAL = 100
 
+class Status:
+  OK = 1
+  NOT_FOUND = 2  # user is not found
+  VALUE_ERROR = 3  # ValueError in parsing json
+  BAD_LOGIN = 4  # json has bad value for 'login'
+
 def flush(msg):
   print msg
   sys.stdout.flush()
 
-def is_ok(output_file, user):
-  resp = json.load(open(output_file, 'r'))
+def get_status(output_file, user):
+  try:
+    resp = json.load(open(output_file, 'r'))
+  except ValueError:
+    return Status.VALUE_ERROR
   if 'message' in resp and resp['message'] == 'Not Found':
-    return True
+    return Status.NOT_FOUND
   if 'login' in resp and resp['login'].lower() == user.lower():
-    return True
-  return False
+    return Status.OK
+  return Status.BAD_LOGIN
 
 def download_profiles(args):
   base_name = args.user_file[args.user_file.rfind('/')+1:]
@@ -51,16 +60,18 @@ def download_profiles(args):
                           output_file))
 
     ok = False
+    status = None
     for delay_sec in ERROR_DELAY_SECS:
       sleep_sec = args.sleep_sec + delay_sec
       if sleep_sec > 0:
         time.sleep(sleep_sec)
 
       if os.system(cmd) == 0:
-        if is_ok(output_file, users[i]):
+        status = get_status(output_file, users[i])
+        if status == Status.OK or status == Status.NOT_FOUND:
           ok = True
           break
-    assert ok, 'failed: %s' % cmd
+    assert ok, 'failed: %s, last status: %s' % (cmd, status)
 
 def main():
   parser = argparse.ArgumentParser()
